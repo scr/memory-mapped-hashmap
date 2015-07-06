@@ -176,4 +176,9 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public byte getByte(int index) {
+        return BUFFER.get(index);
+    }
 }

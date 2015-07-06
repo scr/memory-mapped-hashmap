@@ -176,4 +176,9 @@ public class LongBufferCollection implements IndexedCollection<Long> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public long getLong(int index) {
+        return BUFFER.get(index);
+    }
 }

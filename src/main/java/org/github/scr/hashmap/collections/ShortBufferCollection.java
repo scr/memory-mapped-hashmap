@@ -176,4 +176,9 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public short getShort(int index) {
+        return BUFFER.get(index);
+    }
 }

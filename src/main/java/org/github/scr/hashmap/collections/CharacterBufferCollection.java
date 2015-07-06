@@ -176,4 +176,9 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public char getChar(int index) {
+        return BUFFER.get(index);
+    }
 }

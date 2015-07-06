@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.github.scr.hashmap.TestConstants.*;
+import static org.github.scr.hashmap.TestConstants.TARGET_PATH;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -26,7 +26,7 @@ public class BigFileTimingTest {
     private static final Path WORDS_PATH = Paths.get("/usr/share/dict/words");
     private static final Path WORDS_BIN_PATH = TARGET_PATH.resolve("words.bin");
     private static final String KEY1 = "scientificophilosophical";
-    private static final int TIMES = 100000;
+    private static final int TIMES = 1000000;
 
     private static final long NUM_LINES = 235886L;
 
@@ -106,6 +106,13 @@ public class BigFileTimingTest {
     public void testGetValsBuffered() throws Exception {
         for (int i = 0; i < TIMES; ++i) {
             assertThat(bufferedMap.get(KEY1), notNullValue());
+        }
+    }
+
+    @Test(dependsOnMethods = "testLoadBufferedMap")
+    public void testGetValsBufferedDirect() throws Exception {
+        for (int i = 0; i < TIMES; ++i) {
+            assertThat(bufferedMap.getInt(KEY1), not(is(0)));
         }
     }
 

@@ -176,4 +176,9 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public double getDouble(int index) {
+        return BUFFER.get(index);
+    }
 }

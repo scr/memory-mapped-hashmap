@@ -123,4 +123,39 @@ public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
     public Set<Entry<CharSequence, V>> entrySet() {
         return new EntrySet<>(KEYS, VALUES);
     }
+
+    @Override
+    public byte getByte(CharSequence key) {
+        return VALUES.getByte(KEYS.getIndex(key));
+    }
+
+    @Override
+    public char getChar(CharSequence key) {
+        return VALUES.getChar(KEYS.getIndex(key));
+    }
+
+    @Override
+    public double getDouble(CharSequence key) {
+        return VALUES.getDouble(KEYS.getIndex(key));
+    }
+
+    @Override
+    public float getFloat(CharSequence key) {
+        return VALUES.getFloat(KEYS.getIndex(key));
+    }
+
+    @Override
+    public long getLong(CharSequence key) {
+        return VALUES.getLong(KEYS.getIndex(key));
+    }
+
+    @Override
+    public short getShort(CharSequence key) {
+        return VALUES.getShort(KEYS.getIndex(key));
+    }
+
+    @Override
+    public int getInt(CharSequence key) {
+        return VALUES.getInt(KEYS.getIndex(key));
+    }
 }

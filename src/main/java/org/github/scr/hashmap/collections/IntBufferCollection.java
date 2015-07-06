@@ -176,4 +176,9 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int getInt(int index) {
+        return BUFFER.get(index);
+    }
 }

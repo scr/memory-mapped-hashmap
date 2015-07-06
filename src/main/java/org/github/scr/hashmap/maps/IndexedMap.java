@@ -25,6 +25,7 @@ SOFTWARE.
 package org.github.scr.hashmap.maps;
 
 import org.github.scr.hashmap.DataWriter;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 
@@ -32,4 +33,17 @@ import java.util.Map;
  * Created by scr on 7/3/15.
  */
 public interface IndexedMap<K, V> extends Map<K, V>, DataWriter {
+    byte getByte(K key);
+
+    char getChar(K key);
+
+    double getDouble(K key);
+
+    float getFloat(K key);
+
+    long getLong(K key);
+
+    short getShort(K key);
+
+    int getInt(K key);
 }

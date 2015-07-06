@@ -176,4 +176,9 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
     public void clear() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public float getFloat(int index) {
+        return BUFFER.get(index);
+    }
 }
