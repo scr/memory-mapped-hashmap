@@ -33,5 +33,4 @@ import java.nio.file.Paths;
 public class Constants {
     public static final int MAGIC = 0xDEADBEEF;
     public static final int VERSION = 1;
-    public static final Path TARGET_PATH = Paths.get("target");
 }

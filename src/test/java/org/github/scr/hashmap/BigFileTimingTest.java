@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.github.scr.hashmap.TestConstants.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @Test
 public class BigFileTimingTest {
     private static final Path WORDS_PATH = Paths.get("/usr/share/dict/words");
-    private static final Path WORDS_BIN_PATH = Constants.TARGET_PATH.resolve("words.bin");
+    private static final Path WORDS_BIN_PATH = TARGET_PATH.resolve("words.bin");
     private static final String KEY1 = "scientificophilosophical";
     private static final int TIMES = 100000;
 
