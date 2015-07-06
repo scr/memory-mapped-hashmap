@@ -163,13 +163,12 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
         }
     }
 
-    static int hash(CharSequence key) {
-        int h;
-        return (key == null) ? 0 : (h = CharSequences.hashCode(key)) ^ (h >>> 16);
-    }
-
     static int hashBucket(int numBuckets, CharSequence key) {
-        return (numBuckets - 1) & hash(key);
+        int hashCode = CharSequences.hashCode(key);
+        if (hashCode < 0) {
+            hashCode = -hashCode;
+        }
+        return hashCode % numBuckets;
     }
 
     @Override
