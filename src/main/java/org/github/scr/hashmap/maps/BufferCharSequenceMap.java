@@ -33,6 +33,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -125,37 +126,65 @@ public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
     }
 
     @Override
-    public byte getByte(CharSequence key) {
-        return VALUES.getByte(KEYS.getIndex(key));
+    public byte getByte(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getByte(index);
     }
 
     @Override
-    public char getChar(CharSequence key) {
-        return VALUES.getChar(KEYS.getIndex(key));
+    public char getChar(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getChar(index);
     }
 
     @Override
-    public double getDouble(CharSequence key) {
-        return VALUES.getDouble(KEYS.getIndex(key));
+    public double getDouble(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getDouble(index);
     }
 
     @Override
-    public float getFloat(CharSequence key) {
-        return VALUES.getFloat(KEYS.getIndex(key));
+    public float getFloat(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getFloat(index);
     }
 
     @Override
-    public long getLong(CharSequence key) {
-        return VALUES.getLong(KEYS.getIndex(key));
+    public long getLong(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getLong(index);
     }
 
     @Override
-    public short getShort(CharSequence key) {
-        return VALUES.getShort(KEYS.getIndex(key));
+    public short getShort(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getShort(index);
     }
 
     @Override
-    public int getInt(CharSequence key) {
-        return VALUES.getInt(KEYS.getIndex(key));
+    public int getInt(CharSequence key) throws NoSuchElementException {
+        int index = KEYS.getIndex(key);
+        if (index < 0) {
+            throw new NoSuchElementException();
+        }
+        return VALUES.getInt(index);
     }
 }

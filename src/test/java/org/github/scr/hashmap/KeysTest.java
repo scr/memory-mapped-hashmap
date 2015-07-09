@@ -6,9 +6,11 @@ import org.github.scr.hashmap.utils.CharSequenceIterator;
 import org.testng.annotations.Test;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -31,5 +33,18 @@ public class KeysTest {
         initMap.forEach((k, v) -> {
             assertThat("keys contains " + k, keys.contains(k));
         });
+    }
+
+    @Test(dataProviderClass = DataHelper.class, dataProvider = "simple",
+            expectedExceptions = NoSuchElementException.class)
+    public void testNonExistentPrimitive(
+            Map<String, Integer> initMap, IndexedMap<CharSequence, Integer> map) throws Exception {
+        map.getInt("not-a-key");
+    }
+
+    @Test(dataProviderClass = DataHelper.class, dataProvider = "simple")
+    public void testNonExistentBoxed(
+            Map<String, Integer> initMap, IndexedMap<CharSequence, Integer> map) throws Exception {
+        assertThat(map.get("not-a-key"), nullValue());
     }
 }

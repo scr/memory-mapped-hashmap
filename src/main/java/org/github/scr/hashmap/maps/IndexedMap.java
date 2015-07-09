@@ -28,22 +28,23 @@ import org.github.scr.hashmap.DataWriter;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Created by scr on 7/3/15.
  */
 public interface IndexedMap<K, V> extends Map<K, V>, DataWriter {
-    byte getByte(K key);
+    byte getByte(K key) throws NoSuchElementException;
 
-    char getChar(K key);
+    char getChar(K key) throws NoSuchElementException;
 
-    double getDouble(K key);
+    double getDouble(K key) throws NoSuchElementException;
 
-    float getFloat(K key);
+    float getFloat(K key) throws NoSuchElementException;
 
-    long getLong(K key);
+    long getLong(K key) throws NoSuchElementException;
 
-    short getShort(K key);
+    short getShort(K key) throws NoSuchElementException;
 
-    int getInt(K key);
+    int getInt(K key) throws NoSuchElementException;
 }
