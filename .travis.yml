@@ -4,4 +4,5 @@ jdk:
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -y dictionaries-common wamerican
+- sudo ln -fs /usr/share/dict/american-english /usr/share/dict/words
 sudo: true
