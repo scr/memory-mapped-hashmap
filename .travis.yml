@@ -3,6 +3,6 @@ jdk:
 - oraclejdk8
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install -y dictionaries-common wamerican
-- sudo ln -fs /usr/share/dict/american-english /usr/share/dict/words
+- sudo apt-get install -y dictionaries-common wamerican-insane
+- sudo ln -fs /usr/share/dict/american-english-insane /usr/share/dict/words
 sudo: true
