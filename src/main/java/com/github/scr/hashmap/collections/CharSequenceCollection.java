@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -61,7 +64,6 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
 
         SIZE = byteBuffer.getInt();
         IntBuffer offsets = byteBuffer.asIntBuffer();
-        offsets = byteBuffer.asIntBuffer();
         offsets.limit(SIZE);
         OFFSETS = offsets.slice();
         byteBuffer.position(byteBuffer.position() + Integer.BYTES * SIZE);
@@ -71,6 +73,13 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
         elements.limit(elementCapacity);
         ELEMENTS = elements.slice();
         byteBuffer.position(byteBuffer.position() + Character.BYTES * elementCapacity);
+    }
+
+    public static CharSequenceCollection fromPath(@NotNull Path path) throws IOException {
+        try (FileChannel fileChannel = FileChannel.open(path)) {
+            MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
+            return new CharSequenceCollection(byteBuffer);
+        }
     }
 
     @Nullable
@@ -178,13 +187,13 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
         dataOutput.writeInt(MAGIC);
         dataOutput.writeInt(VERSION);
 
-        dataOutput.write(SIZE);
+        dataOutput.writeInt(SIZE);
         for (int i = 0; i < SIZE; i++) {
             dataOutput.writeInt(OFFSETS.get(i));
         }
 
         int elementCapacity = ELEMENTS.capacity();
-        dataOutput.write(elementCapacity);
+        dataOutput.writeInt(elementCapacity);
         for (int i = 0; i < elementCapacity; i++) {
             dataOutput.writeChar(ELEMENTS.get(i));
         }

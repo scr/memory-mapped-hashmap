@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BigFileTimingTest {
     private static final Path WORDS_PATH = Paths.get("/usr/share/dict/words");
     private static final Path WORDS_BIN_PATH = TestConstants.TARGET_PATH.resolve("words.bin");
+    private static final Path WORDS_LIST_BIN_PATH = TestConstants.TARGET_PATH.resolve("words.list.bin");
     private static final String KEY1 = "scientificophilosophical";
     private static final int TIMES = 1000000;
 
@@ -69,6 +70,12 @@ public class BigFileTimingTest {
     @Test(dependsOnMethods = "testReadAllLines")
     public void testLoadCollection() throws Exception {
         bufferedCollection = new CharSequenceCollection(lines);
+    }
+
+    @Test(dependsOnMethods = "testLoadCollection")
+    public void testSaveBufferedCollection() throws Exception {
+        bufferedCollection.writePath(WORDS_LIST_BIN_PATH);
+        assertThat(WORDS_LIST_BIN_PATH + " exists", Files.exists(WORDS_LIST_BIN_PATH));
     }
 
     @Test(dependsOnMethods = "testLoadRegularMap")
@@ -141,5 +148,10 @@ public class BigFileTimingTest {
         random.ints(0, lines.size())
                 .limit(TIMES)
                 .forEach(bufferedCollection::get);
+    }
+
+    @Test(dependsOnMethods = "testSaveBufferedCollection")
+    public void testLoadBinaryCollection() throws Exception {
+        CharSequenceCollection.fromPath(WORDS_LIST_BIN_PATH);
     }
 }
