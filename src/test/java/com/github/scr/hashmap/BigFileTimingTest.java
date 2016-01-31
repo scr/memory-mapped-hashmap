@@ -1,5 +1,7 @@
 package com.github.scr.hashmap;
 
+import com.github.scr.hashmap.collections.CharSequenceCollection;
+import com.github.scr.hashmap.collections.CharacterBufferCollection;
 import com.github.scr.hashmap.maps.BufferCharSequenceMaps;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -13,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BigFileTimingTest {
     private static final Path WORDS_PATH = Paths.get("/usr/share/dict/words");
     private static final Path WORDS_BIN_PATH = TestConstants.TARGET_PATH.resolve("words.bin");
+    private static final Path WORDS_LIST_BIN_PATH = TestConstants.TARGET_PATH.resolve("words.list.bin");
     private static final String KEY1 = "scientificophilosophical";
     private static final int TIMES = 1000000;
 
@@ -31,6 +35,8 @@ public class BigFileTimingTest {
     private BufferCharSequenceMap<Integer> bufferedMap;
     private TObjectIntMap<String> troveMap = new TObjectIntHashMap<>();
     private Map<String, Integer> regularMap = new HashMap<>();
+    private CharSequenceCollection bufferedCollection;
+    private Random random = new Random(System.currentTimeMillis());
 
     @Test
     public void testReadAllLines() throws Exception {
@@ -59,6 +65,17 @@ public class BigFileTimingTest {
         for (String line : lines) {
             regularMap.put(line, ++i);
         }
+    }
+
+    @Test(dependsOnMethods = "testReadAllLines")
+    public void testLoadCollection() throws Exception {
+        bufferedCollection = new CharSequenceCollection(lines);
+    }
+
+    @Test(dependsOnMethods = "testLoadCollection")
+    public void testSaveBufferedCollection() throws Exception {
+        bufferedCollection.writePath(WORDS_LIST_BIN_PATH);
+        assertThat(WORDS_LIST_BIN_PATH + " exists", Files.exists(WORDS_LIST_BIN_PATH));
     }
 
     @Test(dependsOnMethods = "testLoadRegularMap")
@@ -117,5 +134,24 @@ public class BigFileTimingTest {
         int val = regularMap.get(KEY1);
         assertThat(troveMap.get(KEY1), is(val));
         assertThat(bufferedMap.get(KEY1).intValue(), is(val));
+    }
+
+    @Test(dependsOnMethods = "testReadAllLines")
+    public void testRandomAccessLines() throws Exception {
+        random.ints(0, lines.size())
+                .limit(TIMES)
+                .forEach(lines::get);
+    }
+
+    @Test(dependsOnMethods = "testLoadCollection")
+    public void testRandomAccessBufferedLines() throws Exception {
+        random.ints(0, lines.size())
+                .limit(TIMES)
+                .forEach(bufferedCollection::get);
+    }
+
+    @Test(dependsOnMethods = "testSaveBufferedCollection")
+    public void testLoadBinaryCollection() throws Exception {
+        CharSequenceCollection.fromPath(WORDS_LIST_BIN_PATH);
     }
 }

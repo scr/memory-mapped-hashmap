@@ -25,6 +25,7 @@ SOFTWARE.
 package com.github.scr.hashmap.utils;
 
 import java.nio.CharBuffer;
+import java.util.Iterator;
 
 /**
  * Created by scr on 7/2/15.
@@ -63,6 +64,21 @@ public class CharSequences {
             }
         }
         return true;
+    }
+
+    public static boolean allEqualTo(Iterable<CharSequence> a, Iterable<CharSequence> b) {
+        Iterator<CharSequence> aIterator = a.iterator();
+        Iterator<CharSequence> bIterator = b.iterator();
+
+        while(aIterator.hasNext()) {
+            if (!bIterator.hasNext()) {
+                return false;
+            }
+            if (!equalTo(aIterator.next(), bIterator.next())) {
+                return false;
+            }
+        }
+        return !bIterator.hasNext();
     }
 
     public static int compareTo(CharSequence a, CharSequence b) {
