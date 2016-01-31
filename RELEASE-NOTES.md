@@ -1,3 +1,5 @@
+* 1.1.0
+   * Added the CharSequenceCollection for putting CharSequence lists in shared memory.
 * 1.0.2
    * Fix package to agree with groupId (com.github.scr).
 * 1.0.1
