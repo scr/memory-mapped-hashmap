@@ -1,3 +1,5 @@
+* 1.1.1
+   * Fix issue with size being too big and causing iterator to go too far past the data.
 * 1.1.0
    * Added the CharSequenceCollection for putting CharSequence lists in shared memory.
 * 1.0.2
