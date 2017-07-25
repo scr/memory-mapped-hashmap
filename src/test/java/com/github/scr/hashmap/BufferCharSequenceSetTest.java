@@ -1,6 +1,7 @@
 package com.github.scr.hashmap;
 
 import com.github.scr.hashmap.sets.BufferCharSequenceSet;
+import com.google.common.collect.Iterators;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -32,4 +34,11 @@ public class BufferCharSequenceSetTest {
         BufferCharSequenceSet bcsSet = new BufferCharSequenceSet(input);
         assertThat("Has all elements", bcsSet.containsAll(elements));
     }
+
+    @Test(dataProvider = "sets")
+    public void testBufferedSetHasIteratorOfSameSize(Set<String> input, List<String> elements) throws Exception {
+        BufferCharSequenceSet bcsSet = new BufferCharSequenceSet(input);
+        assertThat(Iterators.size(bcsSet.iterator()), is(elements.size()));
+    }
+
 }

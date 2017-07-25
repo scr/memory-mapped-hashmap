@@ -25,10 +25,10 @@ SOFTWARE.
 package com.github.scr.hashmap.sets;
 
 import com.github.scr.hashmap.utils.CharSequenceIterator;
+import com.github.scr.hashmap.utils.CharSequences;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
-import com.github.scr.hashmap.utils.CharSequences;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,11 @@ import java.nio.IntBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
@@ -82,7 +86,7 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
             buckets.put(bucket, e);
         });
 
-        ELEMENTS = CharBuffer.allocate(totalCharacters.get() + (Character.BYTES * SIZE));
+        ELEMENTS = CharBuffer.allocate(totalCharacters.get() + SIZE);
 
         int id = 0;
         int charOffset = 0;
