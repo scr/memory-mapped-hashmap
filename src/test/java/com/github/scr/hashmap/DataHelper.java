@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by scr on 7/2/15.
@@ -17,7 +18,7 @@ public class DataHelper {
     public static Iterator<Object[]> simple() {
         return Iterators.transform(simpleInit(), data -> {
             @SuppressWarnings("unchecked")
-            Map<String, Integer> initMap = (Map<String, Integer>) data[0];
+            Map<String, Integer> initMap = (Map<String, Integer>) Objects.requireNonNull(data)[0];
             IndexedMap<CharSequence, Integer> map = BufferCharSequenceMaps.intMap(initMap);
             return new Object[]{initMap, map};
         });
