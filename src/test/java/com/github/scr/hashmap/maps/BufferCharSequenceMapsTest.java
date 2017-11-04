@@ -23,7 +23,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").intValue(), is(123));
+        assertThat(map.get("One hundred twenty-three"), is(123));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").floatValue(), is(123f));
+        assertThat(map.get("One hundred twenty-three"), is(123f));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").doubleValue(), is(123d));
+        assertThat(map.get("One hundred twenty-three"), is(123d));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").longValue(), is(123L));
+        assertThat(map.get("One hundred twenty-three"), is(123L));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").shortValue(), is((short) 123));
+        assertThat(map.get("One hundred twenty-three"), is((short) 123));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").byteValue(), is((byte) 123));
+        assertThat(map.get("One hundred twenty-three"), is((byte) 123));
     }
 
     @Test
@@ -101,6 +101,6 @@ public class BufferCharSequenceMapsTest {
         assertThat("Contains all initMap keys", map.keySet().containsAll(initMap.keySet()));
         assertThat("Contains all initMap values", map.values().containsAll(initMap.values()));
 
-        assertThat(map.get("One hundred twenty-three").charValue(), is((char) 123));
+        assertThat(map.get("One hundred twenty-three"), is((char) 123));
     }
 }

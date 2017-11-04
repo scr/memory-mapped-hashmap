@@ -1,11 +1,10 @@
 package com.github.scr.hashmap;
 
 import com.github.scr.hashmap.collections.CharSequenceCollection;
-import com.github.scr.hashmap.collections.CharacterBufferCollection;
+import com.github.scr.hashmap.maps.BufferCharSequenceMap;
 import com.github.scr.hashmap.maps.BufferCharSequenceMaps;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import com.github.scr.hashmap.maps.BufferCharSequenceMap;
 import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
@@ -133,21 +132,21 @@ public class BigFileTimingTest {
     public void testAllGetsSame() throws Exception {
         int val = regularMap.get(KEY1);
         assertThat(troveMap.get(KEY1), is(val));
-        assertThat(bufferedMap.get(KEY1).intValue(), is(val));
+        assertThat(bufferedMap.get(KEY1), is(val));
     }
 
     @Test(dependsOnMethods = "testReadAllLines")
     public void testRandomAccessLines() throws Exception {
         random.ints(0, lines.size())
                 .limit(TIMES)
-                .forEach(lines::get);
+                .forEach(index -> assertThat(lines.get(index), notNullValue()));
     }
 
     @Test(dependsOnMethods = "testLoadCollection")
     public void testRandomAccessBufferedLines() throws Exception {
         random.ints(0, lines.size())
                 .limit(TIMES)
-                .forEach(bufferedCollection::get);
+                .forEach(index -> assertThat(bufferedCollection.get(index), notNullValue()));
     }
 
     @Test(dependsOnMethods = "testSaveBufferedCollection")

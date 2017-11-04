@@ -18,6 +18,7 @@ public class EntriesTest {
     public void testEntries(
             Map<String, Integer> initMap, IndexedMap<CharSequence, Integer> map) throws Exception {
         Set<Map.Entry<CharSequence, Integer>> entries = map.entrySet();
+        //noinspection ReplaceInefficientStreamCount
         assertThat(entries.stream().count(), is(5L));
     }
 }
