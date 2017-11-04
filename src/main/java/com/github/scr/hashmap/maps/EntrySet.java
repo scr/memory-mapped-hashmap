@@ -25,9 +25,9 @@ SOFTWARE.
 package com.github.scr.hashmap.maps;
 
 import com.github.scr.hashmap.collections.IndexedCollection;
-import org.jetbrains.annotations.NotNull;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -59,13 +59,13 @@ public class EntrySet<V> implements Set<Map.Entry<CharSequence, V>> {
         return KEYS.contains(oEntry.getKey()) && VALUES.contains(oEntry.getValue());
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<Map.Entry<CharSequence, V>> iterator() {
         return new EntryIterator<>(KEYS.iterator(), VALUES.iterator());
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         Object[] ret = new Object[KEYS.size()];
@@ -76,9 +76,9 @@ public class EntrySet<V> implements Set<Map.Entry<CharSequence, V>> {
         return ret;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         {
             if (a.length < KEYS.size()) {
                 a = Arrays.copyOf(a, KEYS.size());
@@ -104,7 +104,7 @@ public class EntrySet<V> implements Set<Map.Entry<CharSequence, V>> {
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
             if (!contains(o)) {
                 return false;
@@ -114,17 +114,17 @@ public class EntrySet<V> implements Set<Map.Entry<CharSequence, V>> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends Map.Entry<CharSequence, V>> c) {
+    public boolean addAll(Collection<? extends Map.Entry<CharSequence, V>> c) {
         throw new NotImplementedException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new NotImplementedException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new NotImplementedException();
     }
 

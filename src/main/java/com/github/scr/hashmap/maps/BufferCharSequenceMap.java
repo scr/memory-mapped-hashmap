@@ -24,11 +24,11 @@ SOFTWARE.
 
 package com.github.scr.hashmap.maps;
 
-import com.github.scr.hashmap.sets.IndexedSet;
 import com.github.scr.hashmap.collections.IndexedCollection;
-import org.jetbrains.annotations.NotNull;
+import com.github.scr.hashmap.sets.IndexedSet;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.annotation.Nonnull;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Collection;
@@ -40,18 +40,18 @@ import java.util.Set;
  * Created by scr on 7/3/15.
  */
 public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
-    @NotNull
+    @Nonnull
     protected final IndexedSet<CharSequence> KEYS;
-    @NotNull
+    @Nonnull
     protected final IndexedCollection<V> VALUES;
 
-    public BufferCharSequenceMap(@NotNull IndexedSet<CharSequence> keys, @NotNull IndexedCollection<V> values) {
+    public BufferCharSequenceMap(IndexedSet<CharSequence> keys, IndexedCollection<V> values) {
         KEYS = keys;
         VALUES = values;
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         KEYS.writeOutput(dataOutput);
         VALUES.writeOutput(dataOutput);
     }
@@ -67,19 +67,19 @@ public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
     }
 
     @Override
-    public boolean containsKey(@NotNull Object key) {
+    public boolean containsKey(Object key) {
         return KEYS.contains((CharSequence) key);
     }
 
     @Override
-    public boolean containsValue(@NotNull Object value) {
+    public boolean containsValue(Object value) {
         @SuppressWarnings("unchecked")
         V vValue = (V) value;
         return VALUES.contains(vValue);
     }
 
     @Override
-    public V get(@NotNull Object key) {
+    public V get(Object key) {
         int index = KEYS.getIndex((CharSequence) key);
         if (index < 0) {
             return null;
@@ -88,17 +88,17 @@ public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
     }
 
     @Override
-    public V put(@NotNull CharSequence key, V value) {
+    public V put(CharSequence key, V value) {
         throw new NotImplementedException();
     }
 
     @Override
-    public V remove(@NotNull Object key) {
+    public V remove(Object key) {
         throw new NotImplementedException();
     }
 
     @Override
-    public void putAll(@NotNull Map<? extends CharSequence, ? extends V> m) {
+    public void putAll(Map<? extends CharSequence, ? extends V> m) {
         throw new NotImplementedException();
     }
 
@@ -107,19 +107,19 @@ public class BufferCharSequenceMap<V> implements IndexedMap<CharSequence, V> {
         throw new NotImplementedException();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<CharSequence> keySet() {
         return KEYS;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<V> values() {
         return VALUES;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<Entry<CharSequence, V>> entrySet() {
         return new EntrySet<>(KEYS, VALUES);

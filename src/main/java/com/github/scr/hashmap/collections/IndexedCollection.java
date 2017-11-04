@@ -25,9 +25,9 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.github.scr.hashmap.DataWriter;
-import org.jetbrains.annotations.Nullable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**

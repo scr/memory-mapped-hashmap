@@ -24,8 +24,7 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
-import org.jetbrains.annotations.NotNull;
-
+import javax.annotation.Nonnull;
 import java.nio.*;
 import java.util.Collection;
 
@@ -36,16 +35,16 @@ import static com.github.scr.hashmap.Constants.VERSION;
  * Created by scr on 7/3/15.
  */
 public class BufferCollections {
-    @NotNull
-    public static IndexedCollection<Integer> ofInt(@NotNull Collection<Integer> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Integer> ofInt(Collection<Integer> intCollection) {
         IntBuffer vals = IntBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new IntBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Integer> ofInt(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Integer> ofInt(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -62,16 +61,16 @@ public class BufferCollections {
         return new IntBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Float> ofFloat(@NotNull Collection<Float> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Float> ofFloat(Collection<Float> intCollection) {
         FloatBuffer vals = FloatBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new FloatBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Float> ofFloat(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Float> ofFloat(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -88,16 +87,16 @@ public class BufferCollections {
         return new FloatBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Double> ofDouble(@NotNull Collection<Double> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Double> ofDouble(Collection<Double> intCollection) {
         DoubleBuffer vals = DoubleBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new DoubleBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Double> ofDouble(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Double> ofDouble(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -114,16 +113,16 @@ public class BufferCollections {
         return new DoubleBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Long> ofLong(@NotNull Collection<Long> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Long> ofLong(Collection<Long> intCollection) {
         LongBuffer vals = LongBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new LongBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Long> ofLong(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Long> ofLong(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -140,16 +139,16 @@ public class BufferCollections {
         return new LongBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Short> ofShort(@NotNull Collection<Short> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Short> ofShort(Collection<Short> intCollection) {
         ShortBuffer vals = ShortBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new ShortBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Short> ofShort(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Short> ofShort(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -166,16 +165,16 @@ public class BufferCollections {
         return new ShortBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Byte> ofByte(@NotNull Collection<Byte> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Byte> ofByte(Collection<Byte> intCollection) {
         ByteBuffer vals = ByteBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new ByteBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Byte> ofByte(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Byte> ofByte(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -192,16 +191,16 @@ public class BufferCollections {
         return new ByteBufferCollection(values.slice());
     }
 
-    @NotNull
-    public static IndexedCollection<Character> ofCharacter(@NotNull Collection<Character> intCollection) {
+    @Nonnull
+    public static IndexedCollection<Character> ofCharacter(Collection<Character> intCollection) {
         CharBuffer vals = CharBuffer.allocate(intCollection.size());
         intCollection.forEach(vals::put);
         vals.flip();
         return new CharacterBufferCollection(vals);
     }
 
-    @NotNull
-    public static IndexedCollection<Character> ofCharacter(@NotNull ByteBuffer byteBuffer) {
+    @Nonnull
+    public static IndexedCollection<Character> ofCharacter(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");

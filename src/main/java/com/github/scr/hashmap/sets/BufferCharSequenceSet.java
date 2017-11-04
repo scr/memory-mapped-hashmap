@@ -29,11 +29,11 @@ import com.github.scr.hashmap.utils.CharSequences;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.annotation.Nonnull;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -42,11 +42,7 @@ import java.nio.IntBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
@@ -63,11 +59,11 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
     private final IntBuffer BUCKET_OFFSETS; // start id, end id, first char offset
     private final CharBuffer ELEMENTS; // char length + char[length] characters
 
-    public BufferCharSequenceSet(@NotNull Set<? extends CharSequence> set) {
+    public BufferCharSequenceSet(Set<? extends CharSequence> set) {
         this(set, DEFAULT_LOAD_FACTOR);
     }
 
-    public BufferCharSequenceSet(@NotNull Set<? extends CharSequence> set, float loadFactor) {
+    public BufferCharSequenceSet(Set<? extends CharSequence> set, float loadFactor) {
         Objects.requireNonNull(set);
         if (loadFactor < 0f || loadFactor > 1f) {
             throw new IllegalArgumentException("loadFactor must be between 0 and 1");
@@ -113,7 +109,7 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
         LOGGER.debug("Finished initializing");
     }
 
-    public BufferCharSequenceSet(@NotNull ByteBuffer byteBuffer) {
+    public BufferCharSequenceSet(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -139,7 +135,7 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
         byteBuffer.position(byteBuffer.position() + elementCapacity * Character.BYTES);
     }
 
-    public static BufferCharSequenceSet of(@NotNull Path file) throws IOException {
+    public static BufferCharSequenceSet of(Path file) throws IOException {
         try (FileChannel fc = FileChannel.open(file)) {
             MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
             return new BufferCharSequenceSet(byteBuffer);
@@ -147,7 +143,7 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(MAGIC);  // Magic
         dataOutput.writeInt(VERSION);  // Version
 
@@ -176,7 +172,7 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
     }
 
     @Override
-    public int getIndex(@NotNull CharSequence element) {
+    public int getIndex(CharSequence element) {
         {
             int bucket = hashBucket(NUM_BUCKETS, element);
             int offsetIndex = bucket * 3;
@@ -214,13 +210,13 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
         return getIndex((CharSequence) o) >= 0;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<CharSequence> iterator() {
         return new CharSequenceIterator(ELEMENTS);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         Object[] ret = new Object[SIZE];
@@ -231,9 +227,9 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
         return ret;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         if (a.length < SIZE) {
             a = Arrays.copyOf(a, SIZE);
         }
@@ -257,22 +253,22 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         return Iterables.all(c, this::contains);
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends CharSequence> c) {
+    public boolean addAll(Collection<? extends CharSequence> c) {
         throw new NotImplementedException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new NotImplementedException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new NotImplementedException();
     }
 

@@ -26,7 +26,6 @@ package com.github.scr.hashmap.maps;
 
 import com.github.scr.hashmap.collections.*;
 import com.github.scr.hashmap.sets.BufferCharSequenceSet;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,20 +42,20 @@ public class BufferCharSequenceMaps {
     private static final Logger LOGGER = LoggerFactory.getLogger(BufferCharSequenceMaps.class);
 
     // Integer
-    public static BufferCharSequenceMap<Integer> intMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Integer> intMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return intMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Integer> intMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Integer> intMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Integer> vals = BufferCollections.ofInt(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static <K extends CharSequence> BufferCharSequenceMap<Integer> intMap(@NotNull Map<K, Integer> map) {
+    public static <K extends CharSequence> BufferCharSequenceMap<Integer> intMap(Map<K, Integer> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         int numKeys = keys.size();
         IntBuffer valBuffer = IntBuffer.allocate(numKeys);
@@ -72,20 +71,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Float
-    public static BufferCharSequenceMap<Float> floatMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Float> floatMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return floatMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Float> floatMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Float> floatMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Float> vals = BufferCollections.ofFloat(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Float> floatMap(@NotNull Map<? extends CharSequence, Float> map) {
+    public static BufferCharSequenceMap<Float> floatMap(Map<? extends CharSequence, Float> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         FloatBuffer valBuffer = FloatBuffer.allocate(keys.size());
         map.forEach((k, v) -> {
@@ -95,20 +94,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Double
-    public static BufferCharSequenceMap<Double> doubleMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Double> doubleMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return doubleMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Double> doubleMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Double> doubleMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Double> vals = BufferCollections.ofDouble(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Double> doubleMap(@NotNull Map<? extends CharSequence, Double> map) {
+    public static BufferCharSequenceMap<Double> doubleMap(Map<? extends CharSequence, Double> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         DoubleBuffer valBuffer = DoubleBuffer.allocate(keys.size());
         map.forEach((k, v) -> {
@@ -118,20 +117,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Long
-    public static BufferCharSequenceMap<Long> longMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Long> longMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return longMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Long> longMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Long> longMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Long> vals = BufferCollections.ofLong(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Long> longMap(@NotNull Map<? extends CharSequence, Long> map) {
+    public static BufferCharSequenceMap<Long> longMap(Map<? extends CharSequence, Long> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         LongBuffer valBuffer = LongBuffer.allocate(keys.size());
         map.forEach((k, v) -> {
@@ -141,20 +140,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Short
-    public static BufferCharSequenceMap<Short> shortMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Short> shortMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return shortMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Short> shortMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Short> shortMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Short> vals = BufferCollections.ofShort(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Short> shortMap(@NotNull Map<? extends CharSequence, Short> map) {
+    public static BufferCharSequenceMap<Short> shortMap(Map<? extends CharSequence, Short> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         ShortBuffer valBuffer = ShortBuffer.allocate(keys.size());
         map.forEach((k, v) -> {
@@ -164,20 +163,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Byte
-    public static BufferCharSequenceMap<Byte> byteMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Byte> byteMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return byteMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Byte> byteMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Byte> byteMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Byte> vals = BufferCollections.ofByte(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Byte> byteMap(@NotNull Map<? extends CharSequence, Byte> map) {
+    public static BufferCharSequenceMap<Byte> byteMap(Map<? extends CharSequence, Byte> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         ByteBuffer valBuffer = ByteBuffer.allocate(keys.size());
         map.forEach((k, v) -> {
@@ -187,20 +186,20 @@ public class BufferCharSequenceMaps {
     }
 
     // Character
-    public static BufferCharSequenceMap<Character> characterMap(@NotNull Path filePath) throws IOException {
+    public static BufferCharSequenceMap<Character> characterMap(Path filePath) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(filePath)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return characterMap(byteBuffer);
         }
     }
 
-    public static BufferCharSequenceMap<Character> characterMap(@NotNull ByteBuffer byteBuffer) {
+    public static BufferCharSequenceMap<Character> characterMap(ByteBuffer byteBuffer) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(byteBuffer);
         IndexedCollection<Character> vals = BufferCollections.ofCharacter(byteBuffer);
         return new BufferCharSequenceMap<>(keys, vals);
     }
 
-    public static BufferCharSequenceMap<Character> characterMap(@NotNull Map<? extends CharSequence, Character> map) {
+    public static BufferCharSequenceMap<Character> characterMap(Map<? extends CharSequence, Character> map) {
         BufferCharSequenceSet keys = new BufferCharSequenceSet(map.keySet());
         CharBuffer valBuffer = CharBuffer.allocate(keys.size());
         map.forEach((k, v) -> {

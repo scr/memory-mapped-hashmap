@@ -4,9 +4,9 @@ import com.github.scr.hashmap.utils.CharSequenceIterator;
 import com.github.scr.hashmap.utils.CharSequences;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -30,7 +30,7 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     private final IntBuffer OFFSETS; // first char offset
     private final CharBuffer ELEMENTS; // char length + char[length] characters
 
-    public CharSequenceCollection(@NotNull Collection<? extends CharSequence> elements) {
+    public CharSequenceCollection(Collection<? extends CharSequence> elements) {
         SIZE = elements.size();
         OFFSETS = IntBuffer.allocate(SIZE);
 
@@ -52,7 +52,7 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
         Preconditions.checkState(charOffset == ELEMENTS.capacity());
     }
 
-    public CharSequenceCollection(@NotNull ByteBuffer byteBuffer) {
+    public CharSequenceCollection(ByteBuffer byteBuffer) {
         int magic = byteBuffer.getInt();
         if (magic != MAGIC) {
             throw new IllegalArgumentException("bad magic number");
@@ -75,7 +75,7 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
         byteBuffer.position(byteBuffer.position() + Character.BYTES * elementCapacity);
     }
 
-    public static CharSequenceCollection fromPath(@NotNull Path path) throws IOException {
+    public static CharSequenceCollection fromPath(Path path) throws IOException {
         try (FileChannel fileChannel = FileChannel.open(path)) {
             MappedByteBuffer byteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0L, fileChannel.size());
             return new CharSequenceCollection(byteBuffer);
@@ -105,7 +105,7 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     }
 
     @Override
-    public boolean contains(@NotNull Object o) {
+    public boolean contains(Object o) {
         if (!(o instanceof CharSequence)) {
             return false;
         }
@@ -114,21 +114,21 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
         return Iterators.any(iterator(), it -> CharSequences.equalTo(it, oCharSequence));
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<CharSequence> iterator() {
         return new CharSequenceIterator(ELEMENTS);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         return Iterators.toArray(iterator(), CharSequence.class);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         int size = size();
         if (a.length < size) {
             a = Arrays.copyOf(a, size);
@@ -148,12 +148,12 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     }
 
     @Override
-    public boolean remove(@NotNull Object o) {
+    public boolean remove(Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
             if (!contains(o)) {
                 return false;
@@ -163,17 +163,17 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends CharSequence> c) {
+    public boolean addAll(Collection<? extends CharSequence> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -183,7 +183,7 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(MAGIC);
         dataOutput.writeInt(VERSION);
 

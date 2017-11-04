@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.scr</groupId>
@@ -8,7 +9,8 @@
     <packaging>jar</packaging>
 
     <name>Memory Mapped HashMap</name>
-    <description>Readonly Set and Map that use a MappedByteBuffer to load quickly and use minimal Java Heap.</description>
+    <description>Readonly Set and Map that use a MappedByteBuffer to load quickly and use minimal Java Heap.
+    </description>
     <url>https://github.com/scr/memory-mapped-hashmap</url>
 
     <licenses>
@@ -31,8 +33,8 @@
         <connection>scm:git:git@github.com:scr/memory-mapped-hashmap.git</connection>
         <developerConnection>scm:git:git@github.com:scr/memory-mapped-hashmap.git</developerConnection>
         <url>git@github.com:scr/memory-mapped-hashmap.git</url>
-      <tag>memory-mapped-hashmap-1.1.0</tag>
-  </scm>
+        <tag>memory-mapped-hashmap-1.1.0</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -90,11 +92,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>13.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j.version}</version>
@@ -104,18 +101,26 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.1</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${org.slf4j.version}</version>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 
         <!-- Test Scope -->
         <dependency>
             <groupId>net.sf.trove4j</groupId>
             <artifactId>trove4j</artifactId>
             <version>3.0.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${org.slf4j.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
