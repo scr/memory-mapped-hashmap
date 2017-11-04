@@ -26,9 +26,9 @@ package com.github.scr.hashmap.collections;
 
 import com.github.scr.hashmap.Constants;
 import com.google.common.collect.Iterators;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.IntBuffer;
@@ -40,7 +40,7 @@ import java.util.Iterator;
  * Created by scr on 7/2/15.
  */
 public class IntBufferCollection implements IndexedCollection<Integer> {
-    @NotNull
+    @Nonnull
     private final IntBuffer BUFFER;
 
     @Nullable
@@ -50,7 +50,7 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(Constants.MAGIC);
         dataOutput.writeInt(Constants.VERSION);
         int size = BUFFER.remaining();
@@ -61,10 +61,10 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     }
 
     public static class BufferIterator implements Iterator<Integer> {
-        @NotNull
+        @Nonnull
         private final IntBuffer BUFFER;
 
-        public BufferIterator(@NotNull IntBuffer buffer) {
+        public BufferIterator(IntBuffer buffer) {
             BUFFER = buffer.duplicate();
         }
 
@@ -73,14 +73,14 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
             return BUFFER.hasRemaining();
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public Integer next() {
             return BUFFER.get();
         }
     }
 
-    public IntBufferCollection(@NotNull IntBuffer ints) {
+    public IntBufferCollection(IntBuffer ints) {
         BUFFER = ints;
     }
 
@@ -95,7 +95,7 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     }
 
     @Override
-    public boolean contains(@NotNull Object o) {
+    public boolean contains(Object o) {
         if (!(o instanceof Integer)) {
             return false;
         }
@@ -103,13 +103,13 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
         return Iterators.contains(iterator(), oInteger);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<Integer> iterator() {
         return new BufferIterator(BUFFER);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         int size = size();
@@ -120,9 +120,9 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
         return ret;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         int size = size();
         if (a.length < size) {
             a = Arrays.copyOf(a, size);
@@ -136,17 +136,17 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     }
 
     @Override
-    public boolean add(@NotNull Integer integer) {
+    public boolean add(Integer integer) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(@NotNull Object o) {
+    public boolean remove(Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
             if (!contains(o)) {
                 return false;
@@ -156,17 +156,17 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends Integer> c) {
+    public boolean addAll(Collection<? extends Integer> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 

@@ -25,7 +25,6 @@ SOFTWARE.
 package com.github.scr.hashmap.sets;
 
 import com.github.scr.hashmap.DataWriter;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -33,5 +32,5 @@ import java.util.Set;
  * Created by scr on 7/3/15.
  */
 public interface IndexedSet<E> extends Set<E>, DataWriter {
-    int getIndex(@NotNull E element);
+    int getIndex(E element);
 }

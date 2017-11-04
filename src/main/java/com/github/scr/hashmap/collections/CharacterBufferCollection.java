@@ -25,9 +25,9 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.google.common.collect.Iterators;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.CharBuffer;
@@ -42,7 +42,7 @@ import static com.github.scr.hashmap.Constants.VERSION;
  * Created by scr on 7/2/15.
  */
 public class CharacterBufferCollection implements IndexedCollection<Character> {
-    @NotNull
+    @Nonnull
     private final CharBuffer BUFFER;
 
     @Nullable
@@ -52,7 +52,7 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(MAGIC);
         dataOutput.writeInt(VERSION);
         int size = BUFFER.remaining();
@@ -63,10 +63,10 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
     }
 
     public static class BufferIterator implements Iterator<Character> {
-        @NotNull
+        @Nonnull
         private final CharBuffer BUFFER;
 
-        public BufferIterator(@NotNull CharBuffer buffer) {
+        public BufferIterator(CharBuffer buffer) {
             BUFFER = buffer.duplicate();
         }
 
@@ -75,14 +75,14 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
             return BUFFER.hasRemaining();
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public Character next() {
             return BUFFER.get();
         }
     }
 
-    public CharacterBufferCollection(@NotNull CharBuffer ints) {
+    public CharacterBufferCollection(CharBuffer ints) {
         BUFFER = ints;
     }
 
@@ -105,13 +105,13 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
         return Iterators.contains(iterator(), oCharacter);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<Character> iterator() {
         return new BufferIterator(BUFFER);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         int size = size();
@@ -122,9 +122,9 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
         return ret;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         int size = size();
         if (a.length < size) {
             a = Arrays.copyOf(a, size);
@@ -138,17 +138,17 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
     }
 
     @Override
-    public boolean add(@NotNull Character aCharacter) {
+    public boolean add(Character aCharacter) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(@NotNull Object o) {
+    public boolean remove(Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
             if (!contains(o)) {
                 return false;
@@ -158,17 +158,17 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends Character> c) {
+    public boolean addAll(Collection<? extends Character> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 

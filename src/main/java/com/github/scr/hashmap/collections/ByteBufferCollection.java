@@ -25,9 +25,9 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.google.common.collect.Iterators;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -42,7 +42,7 @@ import static com.github.scr.hashmap.Constants.VERSION;
  * Created by scr on 7/2/15.
  */
 public class ByteBufferCollection implements IndexedCollection<Byte> {
-    @NotNull
+    @Nonnull
     private final ByteBuffer BUFFER;
 
     @Nullable
@@ -52,7 +52,7 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
     }
 
     @Override
-    public void writeOutput(@NotNull DataOutput dataOutput) throws IOException {
+    public void writeOutput(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(MAGIC);
         dataOutput.writeInt(VERSION);
         int size = BUFFER.remaining();
@@ -63,10 +63,10 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
     }
 
     public static class BufferIterator implements Iterator<Byte> {
-        @NotNull
+        @Nonnull
         private final ByteBuffer BUFFER;
 
-        public BufferIterator(@NotNull ByteBuffer buffer) {
+        public BufferIterator(ByteBuffer buffer) {
             BUFFER = buffer.duplicate();
         }
 
@@ -75,14 +75,14 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
             return BUFFER.hasRemaining();
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public Byte next() {
             return BUFFER.get();
         }
     }
 
-    public ByteBufferCollection(@NotNull ByteBuffer ints) {
+    public ByteBufferCollection(ByteBuffer ints) {
         BUFFER = ints;
     }
 
@@ -105,13 +105,13 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
         return Iterators.contains(iterator(), oByte);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<Byte> iterator() {
         return new BufferIterator(BUFFER);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         int size = size();
@@ -122,9 +122,9 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
         return ret;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(T[] a) {
         int size = size();
         if (a.length < size) {
             a = Arrays.copyOf(a, size);
@@ -138,17 +138,17 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
     }
 
     @Override
-    public boolean add(@NotNull Byte aByte) {
+    public boolean add(Byte aByte) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(@NotNull Object o) {
+    public boolean remove(Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
             if (!contains(o)) {
                 return false;
@@ -158,17 +158,17 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends Byte> c) {
+    public boolean addAll(Collection<? extends Byte> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 

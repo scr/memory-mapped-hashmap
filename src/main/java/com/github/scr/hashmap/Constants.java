@@ -24,9 +24,6 @@ SOFTWARE.
 
 package com.github.scr.hashmap;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 /**
  * Created by scr on 7/3/15.
  */

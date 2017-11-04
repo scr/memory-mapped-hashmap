@@ -24,8 +24,6 @@ SOFTWARE.
 
 package com.github.scr.hashmap;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -37,9 +35,9 @@ import java.nio.file.Path;
  * Created by scr on 7/3/15.
  */
 public interface DataWriter {
-    void writeOutput(@NotNull DataOutput dataOutput) throws IOException;
+    void writeOutput(DataOutput dataOutput) throws IOException;
 
-    default void writePath(@NotNull Path file) throws IOException {
+    default void writePath(Path file) throws IOException {
         try (DataOutputStream outputStream =
                      new DataOutputStream(new BufferedOutputStream(Files.newOutputStream(file)))) {
             writeOutput(outputStream);
