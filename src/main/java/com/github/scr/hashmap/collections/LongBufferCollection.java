@@ -25,16 +25,18 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.github.scr.hashmap.Constants;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.PrimitiveIterator;
 
 /**
  * Created by scr on 7/2/15.
@@ -60,7 +62,7 @@ public class LongBufferCollection implements IndexedCollection<Long> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Long> {
+    public static class BufferIterator implements PrimitiveIterator.OfLong {
         @Nonnull
         private final LongBuffer BUFFER;
 
@@ -76,6 +78,11 @@ public class LongBufferCollection implements IndexedCollection<Long> {
         @Nonnull
         @Override
         public Long next() {
+            return nextLong();
+        }
+
+        @Override
+        public long nextLong() {
             return BUFFER.get();
         }
     }
@@ -105,16 +112,15 @@ public class LongBufferCollection implements IndexedCollection<Long> {
 
     @Nonnull
     @Override
-    public Iterator<Long> iterator() {
+    public PrimitiveIterator.OfLong iterator() {
         return new BufferIterator(BUFFER);
     }
 
     @Nonnull
-    @Override
-    public Object[] toArray() {
+    public long[] toLongArray() {
         int size = size();
-        Object[] ret = new Object[size];
-        for (int i = 0; i < size; ++i) {
+        long[] ret = new long[size];
+        for (int i = 0; i < size; i++) {
             ret[i] = BUFFER.get(i);
         }
         return ret;
@@ -122,15 +128,18 @@ public class LongBufferCollection implements IndexedCollection<Long> {
 
     @Nonnull
     @Override
+    public Object[] toArray() {
+        return Iterables.toArray(this, Long.class);
+    }
+
+    @Nonnull
+    @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) Long.valueOf(BUFFER.get(i));
-            a[i] = t;
+            Array.setLong(a, i, BUFFER.get(i));
         }
         return a;
     }

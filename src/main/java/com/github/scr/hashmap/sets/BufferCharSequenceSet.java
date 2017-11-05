@@ -36,13 +36,17 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import javax.annotation.Nonnull;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
@@ -217,27 +221,24 @@ public class BufferCharSequenceSet implements IndexedSet<CharSequence> {
     }
 
     @Nonnull
+    public String[] toStringArray() {
+        return Iterables.toArray(Iterables.transform(this, CharSequence::toString), String.class);
+    }
+
+    @Nonnull
     @Override
     public Object[] toArray() {
-        Object[] ret = new Object[SIZE];
-        int index = 0;
-        for (CharSequence charSequence : this) {
-            ret[index++] = charSequence;
-        }
-        return ret;
+        return Iterables.toArray(this, CharSequence.class);
     }
 
     @Nonnull
     @Override
     public <T> T[] toArray(T[] a) {
-        if (a.length < SIZE) {
-            a = Arrays.copyOf(a, SIZE);
-        }
-        int index = 0;
-        for (CharSequence charSequence : this) {
-            @SuppressWarnings("unchecked")
-            T t = (T) charSequence;
-            a[index++] = t;
+        //noinspection unchecked
+        a = a.length >= SIZE ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), SIZE);
+        Iterator<CharSequence> iterator = iterator();
+        for (int i = 0; i < SIZE; ++i) {
+            Array.set(a, i, iterator.next());
         }
         return a;
     }

@@ -24,14 +24,15 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -114,9 +115,14 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
     @Nonnull
     @Override
     public Object[] toArray() {
+        return Iterables.toArray(this, Float.class);
+    }
+
+    @Nonnull
+    public float[] toFloatArray() {
         int size = size();
-        Object[] ret = new Object[size];
-        for (int i = 0; i < size; ++i) {
+        float[] ret = new float[size];
+        for (int i = 0; i < size; i++) {
             ret[i] = BUFFER.get(i);
         }
         return ret;
@@ -126,13 +132,10 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
     @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) Float.valueOf(BUFFER.get(i));
-            a[i] = t;
+            Array.setFloat(a, i, BUFFER.get(i));
         }
         return a;
     }

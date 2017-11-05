@@ -3,19 +3,20 @@ package com.github.scr.hashmap.collections;
 import com.github.scr.hashmap.utils.CharSequenceIterator;
 import com.github.scr.hashmap.utils.CharSequences;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -121,23 +122,25 @@ public class CharSequenceCollection implements IndexedCollection<CharSequence> {
     }
 
     @Nonnull
+    public String[] toStringArray() {
+        return Iterables.toArray(Iterables.transform(this, CharSequence::toString), String.class);
+    }
+
+    @Nonnull
     @Override
     public Object[] toArray() {
-        return Iterators.toArray(iterator(), CharSequence.class);
+        return Iterables.toArray(this, CharSequence.class);
     }
 
     @Nonnull
     @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         Iterator<CharSequence> iterator = iterator();
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) iterator.next();
-            a[i] = t;
+            Array.set(a, i, iterator.next());
         }
         return a;
     }
