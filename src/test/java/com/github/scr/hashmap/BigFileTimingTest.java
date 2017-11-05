@@ -100,6 +100,12 @@ public class BigFileTimingTest {
         });
     }
 
+    @Test(dependsOnMethods = "testLoadBufferedMap")
+    public void testIterateAllBuffered() throws Exception {
+        bufferedMap.forEach((k, v) -> {
+        });
+    }
+
     @Test(dependsOnMethods = "testLoadTroveMap")
     public void testGetValsTrove() throws Exception {
         for (int i = 0; i < TIMES; ++i) {
