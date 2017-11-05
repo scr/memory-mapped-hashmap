@@ -24,6 +24,7 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.github.scr.hashmap.function.PrimitiveByteIterator;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -63,7 +64,7 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Byte> {
+    public static class BufferIterator implements PrimitiveByteIterator {
         @Nonnull
         private final ByteBuffer BUFFER;
 
@@ -76,9 +77,8 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Byte next() {
+        public byte nextByte() {
             return BUFFER.get();
         }
     }

@@ -75,12 +75,6 @@ public class LongBufferCollection implements IndexedCollection<Long> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
-        @Override
-        public Long next() {
-            return nextLong();
-        }
-
         @Override
         public long nextLong() {
             return BUFFER.get();

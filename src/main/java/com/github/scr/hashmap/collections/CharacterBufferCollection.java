@@ -24,6 +24,7 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.github.scr.hashmap.function.PrimitiveCharIterator;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -63,7 +64,7 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Character> {
+    public static class BufferIterator implements PrimitiveCharIterator {
         @Nonnull
         private final CharBuffer BUFFER;
 
@@ -76,9 +77,8 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Character next() {
+        public char nextChar() {
             return BUFFER.get();
         }
     }
@@ -112,7 +112,6 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
         return new BufferIterator(BUFFER);
     }
 
-    @Nonnull
     public char[] toCharArray() {
         int size = size();
         char[] ret = new char[size];

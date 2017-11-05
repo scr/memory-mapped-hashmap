@@ -76,12 +76,6 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
-        @Override
-        public Double next() {
-            return nextDouble();
-        }
-
         @Override
         public double nextDouble() {
             return BUFFER.get();

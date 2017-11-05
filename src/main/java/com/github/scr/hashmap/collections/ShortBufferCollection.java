@@ -25,6 +25,8 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.github.scr.hashmap.Constants;
+import com.github.scr.hashmap.function.PrimitiveShortIterator;
+import com.github.scr.hashmap.function.ShortConsumer;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -36,6 +38,8 @@ import java.lang.reflect.Array;
 import java.nio.ShortBuffer;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
+import java.util.PrimitiveIterator;
 
 /**
  * Created by scr on 7/2/15.
@@ -61,7 +65,7 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Short> {
+    public static class BufferIterator implements PrimitiveShortIterator {
         @Nonnull
         private final ShortBuffer BUFFER;
 
@@ -74,9 +78,8 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Short next() {
+        public short nextShort() {
             return BUFFER.get();
         }
     }

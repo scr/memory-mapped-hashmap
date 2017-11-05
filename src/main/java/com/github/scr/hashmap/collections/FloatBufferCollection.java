@@ -24,6 +24,8 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.github.scr.hashmap.function.FloatConsumer;
+import com.github.scr.hashmap.function.PrimitiveFloatIterator;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
@@ -35,6 +37,7 @@ import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
 import static com.github.scr.hashmap.Constants.VERSION;
@@ -63,7 +66,7 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Float> {
+    public static class BufferIterator implements PrimitiveFloatIterator {
         @Nonnull
         private final FloatBuffer BUFFER;
 
@@ -76,9 +79,8 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Float next() {
+        public float nextFloat() {
             return BUFFER.get();
         }
     }

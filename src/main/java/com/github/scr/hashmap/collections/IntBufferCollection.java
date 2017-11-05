@@ -74,12 +74,6 @@ public class IntBufferCollection implements IndexedCollection<Integer> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
-        @Override
-        public Integer next() {
-            return nextInt();
-        }
-
         @Override
         public int nextInt() {
             return BUFFER.get();
