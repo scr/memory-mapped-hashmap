@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.Collection;
-import java.util.Iterator;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
 import static com.github.scr.hashmap.Constants.VERSION;
@@ -108,7 +107,7 @@ public class ByteBufferCollection implements IndexedCollection<Byte> {
 
     @Nonnull
     @Override
-    public Iterator<Byte> iterator() {
+    public PrimitiveByteIterator iterator() {
         return new BufferIterator(BUFFER);
     }
 

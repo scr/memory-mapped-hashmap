@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.CharBuffer;
 import java.util.Collection;
-import java.util.Iterator;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
 import static com.github.scr.hashmap.Constants.VERSION;
@@ -108,7 +107,7 @@ public class CharacterBufferCollection implements IndexedCollection<Character> {
 
     @Nonnull
     @Override
-    public Iterator<Character> iterator() {
+    public PrimitiveCharIterator iterator() {
         return new BufferIterator(BUFFER);
     }
 
