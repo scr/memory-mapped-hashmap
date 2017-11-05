@@ -24,16 +24,17 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.DoubleBuffer;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.PrimitiveIterator;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
 import static com.github.scr.hashmap.Constants.VERSION;
@@ -62,7 +63,7 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Double> {
+    public static class BufferIterator implements PrimitiveIterator.OfDouble {
         @Nonnull
         private final DoubleBuffer BUFFER;
 
@@ -75,9 +76,8 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Double next() {
+        public double nextDouble() {
             return BUFFER.get();
         }
     }
@@ -107,16 +107,15 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
 
     @Nonnull
     @Override
-    public Iterator<Double> iterator() {
+    public PrimitiveIterator.OfDouble iterator() {
         return new BufferIterator(BUFFER);
     }
 
     @Nonnull
-    @Override
-    public Object[] toArray() {
+    public double[] toDoubleArray() {
         int size = size();
-        Object[] ret = new Object[size];
-        for (int i = 0; i < size; ++i) {
+        double[] ret = new double[size];
+        for (int i = 0; i < size; i++) {
             ret[i] = BUFFER.get(i);
         }
         return ret;
@@ -124,15 +123,18 @@ public class DoubleBufferCollection implements IndexedCollection<Double> {
 
     @Nonnull
     @Override
+    public Object[] toArray() {
+        return Iterables.toArray(this, Double.class);
+    }
+
+    @Nonnull
+    @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) Double.valueOf(BUFFER.get(i));
-            a[i] = t;
+            Array.setDouble(a, i, BUFFER.get(i));
         }
         return a;
     }

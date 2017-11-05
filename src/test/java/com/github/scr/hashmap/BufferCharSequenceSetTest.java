@@ -5,10 +5,7 @@ import com.google.common.collect.Iterators;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,4 +38,14 @@ public class BufferCharSequenceSetTest {
         assertThat(Iterators.size(bcsSet.iterator()), is(elements.size()));
     }
 
+    @Test(enabled = false, description = "indices are unfortunately in hash sequence order no matter the input order")
+    public void testSequencedSetIsSameOrder() throws Exception {
+        List<String> list = Arrays.asList("foo", "bar", "baz", "biz", "buz");
+        Set<String> set = new LinkedHashSet<>(list);
+        BufferCharSequenceSet bcsSet = new BufferCharSequenceSet(set);
+        for (int i = 0; i < list.size(); i++) {
+            String word = list.get(i);
+            assertThat(word + " should have index " + i, bcsSet.getIndex(list.get(i)), is(i));
+        }
+    }
 }

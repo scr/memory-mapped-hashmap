@@ -24,16 +24,17 @@ SOFTWARE.
 
 package com.github.scr.hashmap.collections;
 
+import com.github.scr.hashmap.function.PrimitiveFloatIterator;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.FloatBuffer;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
 import static com.github.scr.hashmap.Constants.MAGIC;
 import static com.github.scr.hashmap.Constants.VERSION;
@@ -62,7 +63,7 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Float> {
+    public static class BufferIterator implements PrimitiveFloatIterator {
         @Nonnull
         private final FloatBuffer BUFFER;
 
@@ -75,9 +76,8 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Float next() {
+        public float nextFloat() {
             return BUFFER.get();
         }
     }
@@ -107,16 +107,21 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
 
     @Nonnull
     @Override
-    public Iterator<Float> iterator() {
+    public PrimitiveFloatIterator iterator() {
         return new BufferIterator(BUFFER);
     }
 
     @Nonnull
     @Override
     public Object[] toArray() {
+        return Iterables.toArray(this, Float.class);
+    }
+
+    @Nonnull
+    public float[] toFloatArray() {
         int size = size();
-        Object[] ret = new Object[size];
-        for (int i = 0; i < size; ++i) {
+        float[] ret = new float[size];
+        for (int i = 0; i < size; i++) {
             ret[i] = BUFFER.get(i);
         }
         return ret;
@@ -126,13 +131,10 @@ public class FloatBufferCollection implements IndexedCollection<Float> {
     @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) Float.valueOf(BUFFER.get(i));
-            a[i] = t;
+            Array.setFloat(a, i, BUFFER.get(i));
         }
         return a;
     }

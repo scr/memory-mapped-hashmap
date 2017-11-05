@@ -34,26 +34,33 @@ import java.util.Collection;
  * Created by scr on 7/3/15.
  */
 public interface IndexedCollection<E> extends Collection<E>, DataWriter {
-    @Nullable E get(int index);
+    @Nullable
+    E get(int index);
 
     default byte getByte(int index) {
         throw new NotImplementedException();
     }
+
     default char getChar(int index) {
         throw new NotImplementedException();
     }
+
     default double getDouble(int index) {
         throw new NotImplementedException();
     }
+
     default float getFloat(int index) {
         throw new NotImplementedException();
     }
+
     default long getLong(int index) {
         throw new NotImplementedException();
     }
+
     default short getShort(int index) {
         throw new NotImplementedException();
     }
+
     default int getInt(int index) {
         throw new NotImplementedException();
     }

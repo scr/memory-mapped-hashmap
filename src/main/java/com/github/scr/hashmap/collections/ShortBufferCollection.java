@@ -25,16 +25,17 @@ SOFTWARE.
 package com.github.scr.hashmap.collections;
 
 import com.github.scr.hashmap.Constants;
+import com.github.scr.hashmap.function.PrimitiveShortIterator;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.ShortBuffer;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Created by scr on 7/2/15.
@@ -60,7 +61,7 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
         }
     }
 
-    public static class BufferIterator implements Iterator<Short> {
+    public static class BufferIterator implements PrimitiveShortIterator {
         @Nonnull
         private final ShortBuffer BUFFER;
 
@@ -73,9 +74,8 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
             return BUFFER.hasRemaining();
         }
 
-        @Nonnull
         @Override
-        public Short next() {
+        public short nextShort() {
             return BUFFER.get();
         }
     }
@@ -105,16 +105,15 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
 
     @Nonnull
     @Override
-    public Iterator<Short> iterator() {
+    public PrimitiveShortIterator iterator() {
         return new BufferIterator(BUFFER);
     }
 
     @Nonnull
-    @Override
-    public Object[] toArray() {
+    public short[] toShortArray() {
         int size = size();
-        Object[] ret = new Object[size];
-        for (int i = 0; i < size; ++i) {
+        short[] ret = new short[size];
+        for (int i = 0; i < size; i++) {
             ret[i] = BUFFER.get(i);
         }
         return ret;
@@ -122,15 +121,18 @@ public class ShortBufferCollection implements IndexedCollection<Short> {
 
     @Nonnull
     @Override
+    public Object[] toArray() {
+        return Iterables.toArray(this, Short.class);
+    }
+
+    @Nonnull
+    @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
-        if (a.length < size) {
-            a = Arrays.copyOf(a, size);
-        }
+        //noinspection unchecked
+        a = a.length >= size ? a : (T[]) Array.newInstance(a.getClass().getComponentType(), size);
         for (int i = 0; i < size; ++i) {
-            @SuppressWarnings("unchecked")
-            T t = (T) Short.valueOf(BUFFER.get(i));
-            a[i] = t;
+            Array.setShort(a, i, BUFFER.get(i));
         }
         return a;
     }
